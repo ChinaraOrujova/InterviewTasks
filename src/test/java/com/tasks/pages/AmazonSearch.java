@@ -20,10 +20,8 @@ public class AmazonSearch {
     public WebElement searchButton;
 
     @FindBy(xpath = "//span[@class='a-price']//span[@class='a-offscreen']")
-    public List<WebElement> allListedItemsPrice;
+    public List<WebElement> allElements;
 
-    @FindBy(xpath = "//div[@class ='a-section a-text-center s-pagination-container']")
-    public WebElement pagination;
 
 
 

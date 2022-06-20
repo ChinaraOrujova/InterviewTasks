@@ -15,7 +15,7 @@ Feature: User should be able to search the items
     Given user is on the homepage of Amazon
     And user enter "guitar" on search box
     When user click on the search button
-    Then user sees list of  "guitar" on the homepage
-    And user get the average price of all listed "guitar"
+    Then user sees list of results on the homepage
+    And user get the average price of all listed guitar
 
 

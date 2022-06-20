@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.junit.Before;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 
@@ -18,6 +19,12 @@ import java.util.concurrent.TimeUnit;
 public class AmazonSearch_StepDefinitions {
 
     AmazonSearch amazonSearch=new AmazonSearch();
+    List<WebElement> allElements;
+    List<String> allElementsText1st = new ArrayList<>();
+    List<Integer> allPrices =new ArrayList<>();
+
+
+
 
     @Given("user is on the homepage of Amazon")
     public void user_is_on_the_homepage_of_Amazon() {
@@ -41,9 +48,7 @@ public class AmazonSearch_StepDefinitions {
     @Then("user sees {string} on the homepage")
     public void user_sees_on_the_homepage(String string) {
 
-            Driver.getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-            //BrowserUtils.verifyURLContains(string);
 
          String expectedTitle = "Amazon.com : " +string;
          String actualTitle = Driver.getDriver().getTitle();
@@ -51,32 +56,47 @@ public class AmazonSearch_StepDefinitions {
 
     }
 
-    @Then("user sees list of  {string} on the homepage")
-    public void user_sees_list_of_on_the_homepage(String string) {
+    @Then("user sees list of results on the homepage")
+    public void user_sees_list_of_results_on_the_homepage() {
 
-        JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
+        for (WebElement each : allElements) {
 
+            allElementsText1st.add(each.getText());
 
-       for(WebElement eachItemPrice: amazonSearch.allListedItemsPrice){
-           System.out.println(eachItemPrice.getText());
-       }
+        }
+        while (allElementsText1st.contains("")) {
 
-
-
-
-
-
-
-
-
-
-
-    }
-
-    @Then("user get the average price of all listed {string}")
-    public void user_get_the_average_price_of_all_listed(String string) {
+            allElementsText1st.remove("");
+        }
 
     }
 
 
-}
+    @Then("user get the average price of all listed guitar")
+    public void user_get_the_average_price_of_all_listed_guitar() {
+            int total = 0;
+
+            try {
+
+                for (String eachPrice : allElementsText1st) {
+
+                    int sum = Integer.parseInt(eachPrice);
+
+                    total += sum;
+                }
+            } catch (NumberFormatException e) {
+            }
+            System.out.println("total = " + total);
+
+            int averagePrice = total / allElementsText1st.size();
+
+            System.out.println("averagePrice = " + averagePrice);
+
+        }
+
+
+    }
+
+
+
+
