@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         features = "src/test/resources/features/",
         glue = "com/tasks/step_definitions/",
         dryRun = false,
-        tags = "@ui2"
+        tags = "@ui3"
 )
 
 

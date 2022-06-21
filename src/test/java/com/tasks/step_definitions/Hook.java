@@ -1,7 +1,7 @@
 package com.tasks.step_definitions;
 
 import com.tasks.utilities.Driver;
-import org.junit.After;
+import io.cucumber.java.After;
 import org.junit.Before;
 
 import java.util.concurrent.TimeUnit;
@@ -15,6 +15,8 @@ public class Hook {
 
     @After
     public void tearDownMethod(){
-        Driver.getDriver().close();
+        Driver.getDriver().quit();
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.tasks.step_definitions;
 
 import com.tasks.pages.AmazonSearch;
+import com.tasks.utilities.BrowserUtils;
 import com.tasks.utilities.ConfigurationReader;
 import com.tasks.utilities.Driver;
 import io.cucumber.java.en.And;
@@ -18,11 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AmazonSearch_StepDefinitions {
 
-    AmazonSearch amazonSearch=new AmazonSearch();
-    List<WebElement> allElements;
-    List<String> allElementsText1st = new ArrayList<>();
-    List<Integer> allPrices =new ArrayList<>();
-
+    AmazonSearch amazonSearch = new AmazonSearch();
 
 
 
@@ -49,53 +46,37 @@ public class AmazonSearch_StepDefinitions {
     public void user_sees_on_the_homepage(String string) {
 
 
-
-         String expectedTitle = "Amazon.com : " +string;
-         String actualTitle = Driver.getDriver().getTitle();
-         Assert.assertEquals("Title is not as expected!", expectedTitle, actualTitle);
-
-    }
-
-    @Then("user sees list of results on the homepage")
-    public void user_sees_list_of_results_on_the_homepage() {
-
-        for (WebElement each : allElements) {
-
-            allElementsText1st.add(each.getText());
-
-        }
-        while (allElementsText1st.contains("")) {
-
-            allElementsText1st.remove("");
-        }
+        String expectedTitle = "Amazon.com : " + string;
+        String actualTitle = Driver.getDriver().getTitle();
+        Assert.assertEquals("Title is not as expected!", expectedTitle, actualTitle);
 
     }
 
+    @When("user click on the search button and see all the listed guitar")
+    public void user_click_on_the_search_button_and_see_all_the_listed_guitar() {
+        amazonSearch.searchButton.click();
 
-    @Then("user get the average price of all listed guitar")
-    public void user_get_the_average_price_of_all_listed_guitar() {
-            int total = 0;
+    }
 
-            try {
-
-                for (String eachPrice : allElementsText1st) {
-
-                    int sum = Integer.parseInt(eachPrice);
-
-                    total += sum;
-                }
-            } catch (NumberFormatException e) {
-            }
-            System.out.println("total = " + total);
-
-            int averagePrice = total / allElementsText1st.size();
-
-            System.out.println("averagePrice = " + averagePrice);
-
-        }
+    @Then("user get the average price of all listed guitars")
+    public void user_get_the_average_price_of_all_listed_guitars() {
+        amazonSearch.returnAvgPrice(amazonSearch.listOfPrices,amazonSearch.listOfFractions);
 
 
     }
+
+    @Then("user choose one item from the list")
+    public void user_choose_one_item_from_the_list() {
+        amazonSearch.selectItem.click();
+
+
+        String expectedTitleContains = "Guitar";
+        Assert.assertTrue("Title is as expected", Driver.getDriver().getTitle().contains(expectedTitleContains));
+
+
+    }
+}
+
 
 
 
